@@ -3,25 +3,25 @@ import React, { useState, useEffect } from 'react';
 // ================= ICONS (CUSTOM SVGs) =================
 const Icons = {
   Sparkles: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="m5 3 1 1"/><path d="m19 21 1 1"/><path d="m5 21 1-1"/><path d="m19 3 1-1"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" /><path d="m5 3 1 1" /><path d="m19 21 1 1" /><path d="m5 21 1-1" /><path d="m19 3 1-1" /></svg>
   ),
   Zap: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 14.5a3.5 3.5 0 1 1 5.34-2.852"/><path d="M15.5 20a3.5 3.5 0 1 1-2.852-5.34"/><path d="M20 9.5a3.5 3.5 0 1 1-5.34 2.852"/><path d="M8.5 4a3.5 3.5 0 1 1 2.852 5.34"/><line x1="12" y1="12" x2="12" y2="12.01"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 14.5a3.5 3.5 0 1 1 5.34-2.852" /><path d="M15.5 20a3.5 3.5 0 1 1-2.852-5.34" /><path d="M20 9.5a3.5 3.5 0 1 1-5.34 2.852" /><path d="M8.5 4a3.5 3.5 0 1 1 2.852 5.34" /><line x1="12" y1="12" x2="12" y2="12.01" /></svg>
   ),
   Layout: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M3 9h18" /><path d="M9 21V9" /></svg>
   ),
   Activity: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0L6.41 10.54a2 2 0 0 1-1.93 1.46H2"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0L6.41 10.54a2 2 0 0 1-1.93 1.46H2" /></svg>
   ),
   Copy: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg>
   ),
   Menu: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12" /><line x1="4" x2="20" y1="6" y2="6" /><line x1="4" x2="20" y1="18" y2="18" /></svg>
   ),
   Check: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
   )
 };
 
@@ -34,8 +34,8 @@ const Button = ({ children, onClick, variant = 'primary', className = '', isLoad
     ghost: "bg-transparent text-gray-600 hover:text-[#f97316]"
   };
   return (
-    <button 
-      onClick={onClick} 
+    <button
+      onClick={onClick}
       className={`${base} ${variants[variant]} ${className}`}
       disabled={disabled || isLoading}
     >
@@ -110,7 +110,7 @@ export default function App() {
         </div>
         <span className="text-xl font-[Outfit] font-bold text-gray-900 tracking-tight">Summarize<span className="text-[#f97316]">Studio</span></span>
       </div>
-      
+
       <nav className="hidden md:flex items-center gap-8">
         <button onClick={() => setView('home')} className={`font-semibold transition-colors ${view === 'home' ? 'text-[#f97316]' : 'text-gray-600 hover:text-gray-900'}`}>Home</button>
         <button onClick={() => setView('tool')} className={`font-semibold transition-colors ${view === 'tool' ? 'text-[#f97316]' : 'text-gray-600 hover:text-gray-900'}`}>The Tool</button>
@@ -129,7 +129,7 @@ export default function App() {
       <h1 className="text-5xl md:text-7xl font-[Outfit] font-extrabold text-gray-900 mb-6 leading-tight max-w-4xl">
         Turn long documents into <br /> <span className="text-[#f97316]">concise insights.</span>
       </h1>
-      <p className="text-xl text-gray-600 mb-12 max-w-3xl font-medium text-center">
+      <p className="text-xl text-gray-600 mb-12 max-w-3xl font-medium text-center my-2">
         Professional NLP extraction and synthesis using state-of-the-art <br /> weights and TF-IDF logic. Built for speed and precision.
       </p>
       <div className="flex flex-col md:flex-row items-center justify-center gap-4">
@@ -166,26 +166,26 @@ export default function App() {
   const ToolSection = () => (
     <section className="pt-32 pb-20 px-6 md:px-10 w-full bg-[#f9fafb]">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
+
         {/* Input Column */}
         <div className="lg:col-span-5 space-y-6">
           <Card>
             <div className="flex justify-between items-center mb-4">
-               <h2 className="text-xl font-[Outfit] font-bold">Source Document</h2>
-               <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">{inputText.split(/\s+/).filter(Boolean).length} Words</span>
+              <h2 className="text-xl font-[Outfit] font-bold">Source Document</h2>
+              <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">{inputText.split(/\s+/).filter(Boolean).length} Words</span>
             </div>
-            <textarea 
-               value={inputText}
-               onChange={(e) => setInputText(e.target.value)}
-               placeholder="Paste your research, transcript, or article here..."
-               className="w-full h-80 bg-gray-50 border-none rounded-xl p-5 text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-orange-500/20 transition-all resize-none font-medium mb-6"
+            <textarea
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              placeholder="Paste your research, transcript, or article here..."
+              className="w-full h-80 bg-gray-50 border-none rounded-xl p-5 text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-orange-500/20 transition-all resize-none font-medium mb-6"
             />
-            
+
             <div className="space-y-6">
               <div>
                 <label className="text-sm font-bold text-gray-500 mb-3 block">Target Sentences: {summaryLength}</label>
-                <input 
-                  type="range" min="1" max="10" 
+                <input
+                  type="range" min="1" max="10"
                   value={summaryLength}
                   onChange={(e) => setSummaryLength(parseInt(e.target.value))}
                   className="w-full accent-[#f97316] cursor-pointer"
@@ -196,7 +196,7 @@ export default function App() {
                 <label className="text-sm font-bold text-gray-500 mb-3 block">Intelligence Layer</label>
                 <div className="grid grid-cols-3 gap-2">
                   {['TF-IDF Extraction', 'Transformer', 'Compare Both'].map(m => (
-                    <button 
+                    <button
                       key={m}
                       onClick={() => setSelectedModel(m)}
                       className={`py-2 px-3 rounded-lg text-xs font-bold transition-all ${selectedModel === m ? 'bg-gray-900 text-white shadow-lg shadow-gray-900/20' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
@@ -207,15 +207,15 @@ export default function App() {
                 </div>
               </div>
 
-              <Button 
-                onClick={handleGenerate} 
+              <Button
+                onClick={handleGenerate}
                 isLoading={isGenerating}
                 className="w-full py-4 text-lg"
               >
                 Execute Synthesis
               </Button>
-              
-              <Button 
+
+              <Button
                 variant="ghost"
                 onClick={() => { setInputText(''); setTfidfOutput(''); setTransformerOutput(''); setMetrics(null); }}
                 className="w-full text-sm py-2"
@@ -228,57 +228,57 @@ export default function App() {
 
         {/* Output Column */}
         <div className="lg:col-span-7 space-y-6">
-          
+
           {/* Metrics Bar */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-             {[
-               { label: 'Gen Time', value: metrics?.gen_time || '-', icon: <Icons.Activity /> },
-               { label: 'Words', value: metrics?.summary_len || '0', icon: <Icons.Layout /> },
-               { label: 'Ratio', value: metrics?.compression_ratio || '0%', icon: <Icons.Zap /> },
-               { label: 'Status', value: isGenerating ? 'Active' : 'Standby', icon: <Icons.Check /> }
-             ].map((m, i) => (
-               <div key={i} className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-3">
-                  <div className="text-[#f97316]">{m.icon}</div>
-                  <div>
-                    <p className="text-[10px] font-bold text-gray-400 uppercase">{m.label}</p>
-                    <p className="text-sm font-bold text-gray-900">{m.value}</p>
-                  </div>
-               </div>
-             ))}
+            {[
+              { label: 'Gen Time', value: metrics?.gen_time || '-', icon: <Icons.Activity /> },
+              { label: 'Words', value: metrics?.summary_len || '0', icon: <Icons.Layout /> },
+              { label: 'Ratio', value: metrics?.compression_ratio || '0%', icon: <Icons.Zap /> },
+              { label: 'Status', value: isGenerating ? 'Active' : 'Standby', icon: <Icons.Check /> }
+            ].map((m, i) => (
+              <div key={i} className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-3">
+                <div className="text-[#f97316]">{m.icon}</div>
+                <div>
+                  <p className="text-[10px] font-bold text-gray-400 uppercase">{m.label}</p>
+                  <p className="text-sm font-bold text-gray-900">{m.value}</p>
+                </div>
+              </div>
+            ))}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-[500px]">
-             {/* Result Card: TF-IDF */}
-             {(selectedModel === 'Compare Both' || selectedModel === 'TF-IDF Extraction') && (
-               <div className={`bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col ${selectedModel === 'TF-IDF Extraction' ? 'md:col-span-2' : ''}`}>
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="font-bold text-gray-900 flex items-center gap-2">
-                       <span className="p-2 bg-emerald-50 text-emerald-600 rounded-lg"><Icons.Layout /></span>
-                       Extractive Summary
-                    </h3>
-                    {tfidfOutput && <button onClick={() => handleCopy(tfidfOutput)} className="text-gray-400 hover:text-[#f97316] transition-colors"><Icons.Copy /></button>}
-                  </div>
-                  <div className="flex-1 overflow-y-auto text-gray-600 leading-relaxed text-sm scrollbar-hide">
-                    {isGenerating ? 'Computing sentences...' : (tfidfOutput || 'Awaiting input synthesis...')}
-                  </div>
-               </div>
-             )}
+            {/* Result Card: TF-IDF */}
+            {(selectedModel === 'Compare Both' || selectedModel === 'TF-IDF Extraction') && (
+              <div className={`bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col ${selectedModel === 'TF-IDF Extraction' ? 'md:col-span-2' : ''}`}>
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="font-bold text-gray-900 flex items-center gap-2">
+                    <span className="p-2 bg-emerald-50 text-emerald-600 rounded-lg"><Icons.Layout /></span>
+                    Extractive Summary
+                  </h3>
+                  {tfidfOutput && <button onClick={() => handleCopy(tfidfOutput)} className="text-gray-400 hover:text-[#f97316] transition-colors"><Icons.Copy /></button>}
+                </div>
+                <div className="flex-1 overflow-y-auto text-gray-600 leading-relaxed text-sm scrollbar-hide">
+                  {isGenerating ? 'Computing sentences...' : (tfidfOutput || 'Awaiting input synthesis...')}
+                </div>
+              </div>
+            )}
 
-             {/* Result Card: Transformer */}
-             {(selectedModel === 'Compare Both' || selectedModel === 'Transformer') && (
-               <div className={`bg-white rounded-2xl border border-orange-100 shadow-sm p-6 flex flex-col ${selectedModel === 'Transformer' ? 'md:col-span-2' : ''}`}>
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="font-bold text-gray-900 flex items-center gap-2">
-                       <span className="p-2 bg-orange-50 text-[#f97316] rounded-lg"><Icons.Sparkles /></span>
-                       Neural Synthesis
-                    </h3>
-                    {transformerOutput && <button onClick={() => handleCopy(transformerOutput)} className="text-gray-400 hover:text-[#f97316] transition-colors"><Icons.Copy /></button>}
-                  </div>
-                  <div className="flex-1 overflow-y-auto text-gray-600 leading-relaxed text-sm scrollbar-hide">
-                    {isGenerating ? 'Generating tokens...' : (transformerOutput || 'Neural network ready.')}
-                  </div>
-               </div>
-             )}
+            {/* Result Card: Transformer */}
+            {(selectedModel === 'Compare Both' || selectedModel === 'Transformer') && (
+              <div className={`bg-white rounded-2xl border border-orange-100 shadow-sm p-6 flex flex-col ${selectedModel === 'Transformer' ? 'md:col-span-2' : ''}`}>
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="font-bold text-gray-900 flex items-center gap-2">
+                    <span className="p-2 bg-orange-50 text-[#f97316] rounded-lg"><Icons.Sparkles /></span>
+                    Neural Synthesis
+                  </h3>
+                  {transformerOutput && <button onClick={() => handleCopy(transformerOutput)} className="text-gray-400 hover:text-[#f97316] transition-colors"><Icons.Copy /></button>}
+                </div>
+                <div className="flex-1 overflow-y-auto text-gray-600 leading-relaxed text-sm scrollbar-hide">
+                  {isGenerating ? 'Generating tokens...' : (transformerOutput || 'Neural network ready.')}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -331,9 +331,9 @@ export default function App() {
         </div>
         <p className="text-sm text-gray-500 font-medium tracking-wide">© 2026 NLP Web-Based Project. All rights reserved.</p>
         <div className="flex gap-6">
-           <button onClick={() => setView('home')} className="text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors">Home</button>
-           <button onClick={() => setView('tool')} className="text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors">Workspace</button>
-           <button onClick={() => setView('about')} className="text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors">Privacy</button>
+          <button onClick={() => setView('home')} className="text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors">Home</button>
+          <button onClick={() => setView('tool')} className="text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors">Workspace</button>
+          <button onClick={() => setView('about')} className="text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors">Privacy</button>
         </div>
       </div>
     </footer>

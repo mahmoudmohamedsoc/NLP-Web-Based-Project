@@ -41,14 +41,17 @@ class SummarizeResponse(BaseModel):
 @app.on_event("startup")
 async def startup_event():
     # Load BART weights on startup
-    weights_path = os.path.join(os.path.dirname(__file__), "models", "bart_weights")
-    if os.path.exists(weights_path):
-        try:
-            bart_manager.load_model(weights_path)
-        except Exception as e:
-            print(f"Warning: Could not load BART model on startup: {e}")
-    else:
-        print("Warning: BART weights not found. Transformer mode will fail unless loaded later.")
+    try:
+        from pathlib import Path
+        base_dir = Path(__file__).resolve().parent
+        weights_path = base_dir / "models" / "bart_weights"
+        
+        if weights_path.exists():
+            bart_manager.load_model(str(weights_path))
+        else:
+            print(f"Warning: BART weights not found at {weights_path}. Transformer mode will fail unless loaded later.")
+    except Exception as e:
+        print(f"Warning: Could not load BART model on startup: {e}")
 
 # ================= Endpoints =================
 

@@ -2,6 +2,7 @@ import torch
 from transformers import BartForConditionalGeneration, BartTokenizer
 from peft import PeftModel
 import os
+from pathlib import Path
 
 class BartSummarizer:
     _instance = None
@@ -52,23 +53,29 @@ class BartSummarizer:
         """
         if self.model is None:
             # Attempt to load from multiple potential paths
-            current_dir = os.path.dirname(__file__) or "."
-            potential_paths = [
-                os.path.join(current_dir, "bart_weights"),
-                os.path.join(os.getcwd(), "models", "bart_weights"),
-                os.path.join(os.getcwd(), "bart_weights")
-            ]
-            
-            loaded = False
-            for path in potential_paths:
-                if os.path.exists(path):
-                    print(f"Discovered weights at: {path}")
-                    self.load_model(path)
-                    loaded = True
-                    break
-            
-            if not loaded:
-                raise Exception(f"BART model not loaded. Tried searching in: {potential_paths}")
+            try:
+                base_dir = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
+                potential_paths = [
+                    base_dir / "bart_weights",
+                    Path.cwd() / "models" / "bart_weights",
+                    Path.cwd() / "bart_weights"
+                ]
+                
+                loaded = False
+                for path in potential_paths:
+                    if path.exists():
+                        print(f"Discovered weights at: {path}")
+                        self.load_model(str(path))
+                        loaded = True
+                        break
+                
+                if not loaded:
+                    raise Exception(f"BART model weights not found. Looked in: {[str(p) for p in potential_paths]}")
+            except Exception as e:
+                # Catch TypeErrors during path joining if any part was None
+                if "NoneType" in str(e):
+                    raise Exception(f"Path discovery failed: {e}. Check __file__ and CWD.")
+                raise e
         
         inputs = self.tokenizer(text, return_tensors="pt", max_length=1024, truncation=True).to(self.device)
         
