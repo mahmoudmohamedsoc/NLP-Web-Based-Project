@@ -122,15 +122,15 @@ export default function App() {
   );
 
   const HomeSection = () => (
-    <section className="pt-40 pb-20 px-6 md:px-10 w-full text-center bg-[#f9fafb]">
+    <section className="pt-40 pb-20 px-6 md:px-10 w-full flex flex-col items-center text-center bg-[#f9fafb]">
       <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 text-[#f97316] text-sm font-bold mb-8 animate-bounce">
         <Icons.Zap /> Next-Gen AI Summarization
       </div>
-      <h1 className="text-5xl md:text-7xl font-[Outfit] font-extrabold text-gray-900 mb-6 leading-tight">
+      <h1 className="text-5xl md:text-7xl font-[Outfit] font-extrabold text-gray-900 mb-6 leading-tight max-w-4xl">
         Turn long documents into <br /> <span className="text-[#f97316]">concise insights.</span>
       </h1>
-      <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto font-medium" style={{ textAlign: 'center' }}>
-        Professional NLP extraction and synthesis using state-of-the-art <br className="hidden md:block" /> weights and TF-IDF logic. Built for speed and precision.
+      <p className="text-xl text-gray-600 mb-12 max-w-3xl font-medium text-center">
+        Professional NLP extraction and synthesis using state-of-the-art <br /> weights and TF-IDF logic. Built for speed and precision.
       </p>
       <div className="flex flex-col md:flex-row items-center justify-center gap-4">
         <Button onClick={() => setView('tool')} className="w-full md:w-auto text-lg px-10">Start Summarizing</Button>
