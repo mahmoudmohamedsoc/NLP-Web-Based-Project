@@ -1,374 +1,353 @@
 import React, { useState, useEffect } from 'react';
 
-// ================= Custom SVG Icons (Modern & Sleek) =================
+// ================= ICONS (CUSTOM SVGs) =================
 const Icons = {
   Sparkles: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="m5 3 1 1"/><path d="m19 21 1 1"/><path d="m5 21 1-1"/><path d="m19 3 1-1"/></svg>
   ),
   Zap: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 14.899 15.101 4M10 20l10.101-10.899"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 14.5a3.5 3.5 0 1 1 5.34-2.852"/><path d="M15.5 20a3.5 3.5 0 1 1-2.852-5.34"/><path d="M20 9.5a3.5 3.5 0 1 1-5.34 2.852"/><path d="M8.5 4a3.5 3.5 0 1 1 2.852 5.34"/><line x1="12" y1="12" x2="12" y2="12.01"/></svg>
   ),
   Layout: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
   ),
   Activity: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0L6.41 10.54a2 2 0 0 1-1.93 1.46H2"/></svg>
   ),
-  Clock: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+  Copy: () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
   ),
-  Settings: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+  Menu: () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
   ),
   Check: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
   )
 };
 
-const SummarizerApp = () => {
-  // ================= State Management =================
-  const [inputText, setInputText] = useState('');
-  const [wordCount, setWordCount] = useState(0);
-  const [summaryLength, setSummaryLength] = useState(3);
-  const [selectedModel, setSelectedModel] = useState('Compare Both');
-  const [activeTab, setActiveTab] = useState('Visual Comparison');
-  const [isGenerating, setIsGenerating] = useState(false);
-  
-  // Results State
-  const [tfidfOutput, setTfidfOutput] = useState('');
-  const [transformerOutput, setTransformerOutput] = useState('');
-  const [metrics, setMetrics] = useState({
-    gen_time: '-',
-    original_len: 0,
-    summary_len: 0,
-    compression_ratio: '-'
-  });
-
-  // ================= Handlers =================
-  const handleInputChange = (e) => {
-    const text = e.target.value;
-    setInputText(text);
-    setWordCount(text.trim().split(/\s+/).filter((word) => word.length > 0).length);
+// ================= REUSABLE COMPONENTS =================
+const Button = ({ children, onClick, variant = 'primary', className = '', isLoading = false, disabled = false }) => {
+  const base = "px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed";
+  const variants = {
+    primary: "bg-[#f97316] text-white hover:bg-[#ea580c] shadow-lg shadow-orange-500/20",
+    secondary: "bg-white text-gray-800 border border-gray-200 hover:bg-gray-50",
+    ghost: "bg-transparent text-gray-600 hover:text-[#f97316]"
   };
-
-  const handleGenerate = async () => {
-    if (!inputText.trim()) return;
-    
-    setIsGenerating(true);
-    
-    // Smooth transition simulation for feelings
-    setTfidfOutput('');
-    setTransformerOutput('');
-
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
-    
-    try {
-        const response = await fetch(`${apiUrl}/summarize`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            text: inputText,
-            num_sentences: summaryLength,
-            summary_mode: selectedModel === 'Compare Both' ? 'both' : (selectedModel === 'TF-IDF Extraction' ? 'tfidf' : 'transformer')
-        }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-        setTfidfOutput(data.tfidf_summary);
-        setTransformerOutput(data.transformer_summary);
-        setMetrics(data.metrics);
-        } else {
-        alert("Error: " + data.detail);
-        }
-    } catch (error) {
-        console.error("Connection failed:", error);
-        alert(`Could not connect to API at ${apiUrl}`);
-    } finally {
-        setIsGenerating(false);
-    }
-  };
-
-  // ================= Components =================
-  const Card = ({ children, className = '', glow = false }) => (
-    <div className={`
-      relative bg-[#161a23]/60 backdrop-blur-xl border border-white/5 rounded-2xl p-6 transition-all duration-300
-      hover:border-white/10 group ${glow ? 'shadow-[0_0_80px_-20px_rgba(124,58,237,0.15)]' : ''}
-      ${className}
-    `}>
-      {children}
-    </div>
-  );
-
-  const AnalyticsCard = ({ title, value, icon: IconComponent, color = "text-purple-400" }) => (
-    <Card className="flex-1 flex flex-col items-center justify-center text-center p-5 group hover:scale-[1.02] active:scale-[0.98] cursor-default">
-      <div className={`${color} mb-3 group-hover:scale-110 transition-transform duration-300`}>
-        <IconComponent />
-      </div>
-      <div className="text-[#8e94a5] text-[10px] font-bold uppercase tracking-widest mb-1">{title}</div>
-      <div className="text-white font-semibold text-lg">{value}</div>
-    </Card>
-  );
-
   return (
-    <div className="flex h-screen bg-[#07090d] text-[#e2e8f0] font-[Inter] overflow-hidden selection:bg-purple-500/30">
-      
-      {/* ================= SIDEBAR ================= */}
-      <div className="w-[280px] bg-[#0b0e14] border-r border-white/5 flex flex-col p-8 z-10">
-        <div className="flex items-center gap-3 mb-12">
-          <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20">
-            <Icons.Sparkles />
-          </div>
-          <div className="font-[Outfit] font-bold text-xl tracking-tight text-white">NLP_studio.</div>
-        </div>
-
-        <nav className="flex flex-col gap-2 flex-1">
-          <button className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 text-white font-medium border border-white/5 shadow-sm transition-all hover:bg-white/10">
-            <Icons.Layout />
-            Workspace
-          </button>
-          <button className="flex items-center gap-3 px-4 py-3 rounded-xl text-[#71717a] hover:text-white hover:bg-white/5 transition-all">
-            <Icons.Activity />
-            Analytics
-          </button>
-          <button className="flex items-center gap-3 px-4 py-3 rounded-xl text-[#71717a] hover:text-white hover:bg-white/5 transition-all">
-            <Icons.Clock />
-            Recent
-          </button>
-        </nav>
-
-        <div className="mt-auto pt-8 border-t border-white/5">
-          <button className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3.5 rounded-xl font-bold hover:shadow-[0_0_20px_rgba(124,58,237,0.3)] transition-all active:scale-[0.97]">
-            <span className="text-lg">+</span>
-            New Session
-          </button>
-        </div>
-      </div>
-
-      {/* ================= MAIN CONTENT ================= */}
-      <div className="flex-1 flex flex-col overflow-y-auto md:overflow-hidden relative">
-        {/* Background Gradients for Depth */}
-        <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-purple-600/10 blur-[120px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-[-10%] left-[20%] w-[400px] h-[400px] bg-blue-600/5 blur-[120px] rounded-full pointer-events-none" />
-        
-        {/* Header */}
-        <header className="flex justify-between items-center px-10 py-8 z-10 shrink-0">
-          <div>
-            <h1 className="text-3xl font-[Outfit] font-bold text-white mb-1">AI Summarizer Pro</h1>
-            <p className="text-[#71717a] text-sm">Professional NLP extraction and synthesis</p>
-          </div>
-          <div className="flex gap-3">
-            <button className="w-10 h-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-[#71717a] hover:text-white hover:bg-white/10 transition-all"><Icons.Settings /></button>
-            <div className="w-10 h-10 rounded-xl bg-[#1f2937] border border-white/10 flex items-center justify-center text-white font-bold ring-2 ring-purple-500/20">M</div>
-          </div>
-        </header>
-
-        {/* Content Body */}
-        <div className="flex flex-1 gap-8 px-10 pb-10 overflow-hidden z-10">
-          
-          {/* ========== LEFT PANEL (INPUT) ========== */}
-          <div className="w-[38%] flex flex-col gap-6 shrink-0">
-            
-            {/* Input Card */}
-            <Card className="flex-1 flex flex-col overflow-hidden" glow>
-              <div className="flex justify-between items-center mb-5">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-                  <h2 className="text-white font-bold text-xs uppercase tracking-widest">Source Document</h2>
-                </div>
-                <div className="text-[10px] font-bold text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded-full uppercase tracking-widest">
-                  {wordCount} Words
-                </div>
-              </div>
-              <textarea
-                className="flex-1 bg-transparent border-none resize-none outline-none text-[15px] leading-relaxed text-blue-50/90 placeholder-slate-600 scrollbar-hide"
-                placeholder="Paste your professional transcript, research paper, or legal document here..."
-                value={inputText}
-                onChange={handleInputChange}
-              />
-            </Card>
-
-            {/* Settings Card */}
-            <Card className="p-6">
-              <h2 className="text-white font-bold text-xs uppercase tracking-widest mb-5">Model Tuning</h2>
-              <div className="flex gap-5">
-                <div className="flex-1">
-                  <label className="block text-[10px] font-bold text-[#71717a] mb-2.5 uppercase tracking-widest">Sentences</label>
-                  <input
-                    type="number"
-                    min="1"
-                    max="20"
-                    value={summaryLength}
-                    onChange={(e) => setSummaryLength(parseInt(e.target.value))}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white outline-none focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/5 transition-all"
-                  />
-                </div>
-                <div className="flex-[2.5]">
-                  <label className="block text-[10px] font-bold text-[#71717a] mb-2.5 uppercase tracking-widest">Intelligence Layer</label>
-                  <div className="relative">
-                    <select
-                      value={selectedModel}
-                      onChange={(e) => setSelectedModel(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white outline-none focus:border-purple-500/50 transition-all appearance-none cursor-pointer"
-                    >
-                      <option value="TF-IDF">TF-IDF Extraction</option>
-                      <option value="Transformer">Transformer Abstractive</option>
-                      <option value="Compare Both">Multi-Model Compare</option>
-                    </select>
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[#71717a]">
-                      <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Card>
-
-            {/* Action Button */}
-            <button
-              onClick={handleGenerate}
-              disabled={isGenerating || !inputText.trim()}
-              className={`
-                group relative w-full py-4.5 rounded-2xl font-bold text-sm tracking-wide overflow-hidden transition-all duration-300
-                ${isGenerating || !inputText.trim()
-                  ? 'bg-white/5 text-slate-600 cursor-not-allowed grayscale'
-                  : 'bg-white text-black hover:scale-[1.01] active:scale-[0.98] shadow-2xl shadow-white/5'}
-              `}
-            >
-              <div className={`absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-600 transition-transform duration-500 ${isGenerating || !inputText.trim() ? 'translate-y-full' : 'translate-y-full group-hover:translate-y-0 opacity-10'}`} />
-              <div className="flex items-center justify-center gap-3 relative z-10">
-                {isGenerating ? (
-                  <>
-                    <div className="w-4 h-4 border-2 border-slate-400 border-t-white rounded-full animate-spin" />
-                    Synthesizing Intelligence...
-                  </>
-                ) : (
-                  <>
-                    <Icons.Zap />
-                    Execute Synthesis
-                  </>
-                )}
-              </div>
-            </button>
-          </div>
-
-          {/* ========== RIGHT PANEL (OUTPUT & METRICES) ========== */}
-          <div className="flex-1 flex flex-col gap-6 overflow-hidden">
-            
-            {/* Nav Tabs */}
-            <div className="flex gap-8 border-b border-white/5 shrink-0">
-              {['Visual Comparison', 'Performance Metrics'].map((tab) => (
-                <button
-                  key={tab}
-                  className={`
-                    flex items-center gap-2 pb-4 text-xs font-bold uppercase tracking-widest transition-all relative
-                    ${activeTab === tab ? 'text-white' : 'text-[#71717a] hover:text-blue-200'}
-                  `}
-                  onClick={() => setActiveTab(tab)}
-                >
-                  {tab === 'Visual Comparison' ? <Icons.Layout /> : <Icons.Activity />}
-                  {tab}
-                  {activeTab === tab && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full" />
-                  )}
-                </button>
-              ))}
-            </div>
-
-            {/* Output Display */}
-            <div className="flex-1 overflow-hidden">
-              {activeTab === 'Visual Comparison' ? (
-                <div className="grid grid-cols-2 gap-6 h-full">
-                  
-                  {/* Extractive Card */}
-                  {(selectedModel === 'Compare Both' || selectedModel === 'TF-IDF') && (
-                    <Card key="tfidf" className={`flex flex-col ${selectedModel === 'TF-IDF' ? 'col-span-2' : 'col-span-2 lg:col-span-1'} border-white/5`}>
-                      <div className="flex justify-between items-center mb-5">
-                        <div className="flex items-center gap-3">
-                           <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-500"><Icons.Layout /></div>
-                           <h3 className="text-white font-[Outfit] font-semibold text-lg">Extractive Summary</h3>
-                        </div>
-                        <button onClick={() => handleCopy(tfidfOutput)} className="p-2 hover:bg-white/5 rounded-lg text-[#71717a] hover:text-white transition-all"><Icons.Activity /></button>
-                      </div>
-                      <div className={`flex-1 text-[15px] leading-relaxed text-blue-50/70 overflow-y-auto pr-2 custom-scrollbar transition-opacity duration-700 ${!isGenerating && tfidfOutput ? 'opacity-100' : 'opacity-40'}`}>
-                        {tfidfOutput || 'System idle. Waiting for document input...'}
-                      </div>
-                    </Card>
-                  )}
-
-                  {/* Abstractive Card */}
-                  {(selectedModel === 'Compare Both' || selectedModel === 'Transformer') && (
-                    <Card key="transformer" className={`flex flex-col ${selectedModel === 'Transformer' ? 'col-span-2' : 'col-span-2 lg:col-span-1'} border-purple-500/20`}>
-                      <div className="flex justify-between items-center mb-5">
-                        <div className="flex items-center gap-3">
-                           <div className="p-2 rounded-lg bg-purple-500/10 text-purple-400"><Icons.Sparkles /></div>
-                           <h3 className="text-white font-[Outfit] font-semibold text-lg">Neural Synthesis</h3>
-                        </div>
-                        <button onClick={() => handleCopy(transformerOutput)} className="p-2 hover:bg-white/5 rounded-lg text-[#71717a] hover:text-white transition-all"><Icons.Activity /></button>
-                      </div>
-                      <div className={`flex-1 text-[15px] leading-relaxed text-purple-50/80 overflow-y-auto pr-2 custom-scrollbar transition-opacity duration-700 ${!isGenerating && transformerOutput ? 'opacity-100' : 'opacity-40'}`}>
-                        {transformerOutput || 'BART architecture optimized. Awaiting document...'}
-                      </div>
-                    </Card>
-                  )}
-                </div>
-              ) : (
-                /* Metrics Visualization */
-                <div className="h-full space-y-6">
-                  <div className="grid grid-cols-2 gap-6">
-                    <Card className="hover:border-blue-500/20">
-                      <div className="text-[10px] font-bold text-[#71717a] uppercase tracking-[0.2em] mb-2">Execution Pipeline</div>
-                      <div className="text-2xl font-[Outfit] font-bold text-white mb-4">{metrics.gen_time}</div>
-                      <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                        <div className="h-full bg-blue-500 w-[60%] shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
-                      </div>
-                    </Card>
-                    <Card className="hover:border-purple-500/20">
-                      <div className="text-[10px] font-bold text-[#71717a] uppercase tracking-[0.2em] mb-2">Compression Density</div>
-                      <div className="text-2xl font-[Outfit] font-bold text-white mb-4">{metrics.compression_ratio}</div>
-                      <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                        <div className="h-full bg-purple-500 w-[85%] shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
-                      </div>
-                    </Card>
-                  </div>
-                  
-                  <Card className="flex-1">
-                    <div className="flex items-center gap-2 mb-6">
-                      <Icons.Activity />
-                      <h3 className="text-white font-bold text-sm uppercase tracking-widest">Diagnostic Detail</h3>
-                    </div>
-                    <div className="space-y-4">
-                      {[
-                        { label: 'Original Payload', value: `${metrics.original_len} chars` },
-                        { label: 'Synthesized Length', value: `${metrics.summary_len} chars` },
-                        { label: 'Inference Confidence', value: 'High' },
-                        { label: 'Architecture', value: 'BART + LoRA' }
-                      ].map((item, i) => (
-                        <div key={i} className="flex justify-between items-center py-3 border-b border-white/5">
-                          <span className="text-[#71717a] text-sm">{item.label}</span>
-                          <span className="text-white font-medium">{item.value}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </Card>
-                </div>
-              )}
-            </div>
-
-            {/* Bottom Real-time Analytics Cards */}
-            <div className="flex gap-4 h-[120px] shrink-0">
-              <AnalyticsCard icon={Icons.Activity} title="Gen Time" value={metrics.gen_time} color="text-blue-400" />
-              <AnalyticsCard icon={Icons.Zap} title="Efficiency" value={metrics.compression_ratio} color="text-amber-400" />
-              <AnalyticsCard icon={Icons.Check} title="State" value={isGenerating ? "Synthesizing..." : (transformerOutput ? "Verified" : "Standby")} color="text-emerald-400" />
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
+    <button 
+      onClick={onClick} 
+      className={`${base} ${variants[variant]} ${className}`}
+      disabled={disabled || isLoading}
+    >
+      {isLoading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : children}
+    </button>
   );
 };
 
-export default SummarizerApp;
+const Card = ({ children, className = "" }) => (
+  <div className={`bg-white rounded-2xl shadow-sm border border-gray-100 p-6 ${className}`}>
+    {children}
+  </div>
+);
+
+// ================= APPLICATION =================
+export default function App() {
+  const [view, setView] = useState('home'); // home, tool, about
+  const [inputText, setInputText] = useState('');
+  const [summaryLength, setSummaryLength] = useState(3);
+  const [selectedModel, setSelectedModel] = useState('Compare Both');
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [tfidfOutput, setTfidfOutput] = useState('');
+  const [transformerOutput, setTransformerOutput] = useState('');
+  const [metrics, setMetrics] = useState(null);
+
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+
+  const handleGenerate = async () => {
+    if (!inputText.trim()) return alert("Please enter some text!");
+    setIsGenerating(true);
+    setTfidfOutput('');
+    setTransformerOutput('');
+
+    try {
+      const response = await fetch(`${apiUrl}/summarize`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: inputText,
+          num_sentences: summaryLength,
+          summary_mode: selectedModel === 'Compare Both' ? 'both' : (selectedModel === 'TF-IDF Extraction' ? 'tfidf' : 'transformer')
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setTfidfOutput(data.tfidf_summary);
+        setTransformerOutput(data.transformer_summary);
+        setMetrics(data.metrics);
+      } else {
+        alert("API Error: " + data.detail);
+      }
+    } catch (error) {
+      alert("Connection failed. Ensure the backend is running!");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleCopy = (text) => {
+    navigator.clipboard.writeText(text);
+    alert("Copied to clipboard!");
+  };
+
+  // ================= RENDER SECTIONS =================
+
+  const Header = () => (
+    <header className="fixed top-0 left-0 right-0 h-20 bg-white/80 backdrop-blur-md border-b border-gray-100 z-50 px-6 md:px-12 flex items-center justify-between">
+      <div className="flex items-center gap-2 cursor-pointer" onClick={() => setView('home')}>
+        <div className="w-10 h-10 bg-[#f97316] rounded-xl flex items-center justify-center text-white shadow-lg shadow-orange-500/20">
+          <Icons.Sparkles />
+        </div>
+        <span className="text-xl font-[Outfit] font-bold text-gray-900 tracking-tight">Summarize<span className="text-[#f97316]">Studio</span></span>
+      </div>
+      
+      <nav className="hidden md:flex items-center gap-8">
+        <button onClick={() => setView('home')} className={`font-semibold transition-colors ${view === 'home' ? 'text-[#f97316]' : 'text-gray-600 hover:text-gray-900'}`}>Home</button>
+        <button onClick={() => setView('tool')} className={`font-semibold transition-colors ${view === 'tool' ? 'text-[#f97316]' : 'text-gray-600 hover:text-gray-900'}`}>The Tool</button>
+        <button onClick={() => setView('about')} className={`font-semibold transition-colors ${view === 'about' ? 'text-[#f97316]' : 'text-gray-600 hover:text-gray-900'}`}>Technologies</button>
+      </nav>
+
+      <Button variant="primary" onClick={() => setView('tool')} className="scale-90 md:scale-100">Get Started</Button>
+    </header>
+  );
+
+  const HomeSection = () => (
+    <section className="pt-40 pb-20 px-6 max-w-7xl mx-auto text-center">
+      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 text-[#f97316] text-sm font-bold mb-8 animate-bounce">
+        <Icons.Zap /> Next-Gen AI Summarization
+      </div>
+      <h1 className="text-5xl md:text-7xl font-[Outfit] font-extrabold text-gray-900 mb-6 leading-tight">
+        Turn long documents into <br /> <span className="text-[#f97316]">concise insights.</span>
+      </h1>
+      <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto font-medium">
+        Professional NLP extraction and synthesis using state-of-the-art weights and TF-IDF logic. Built for speed and precision.
+      </p>
+      <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+        <Button onClick={() => setView('tool')} className="w-full md:w-auto text-lg px-10">Start Summarizing</Button>
+        <Button onClick={() => setView('about')} variant="secondary" className="w-full md:w-auto text-lg px-10">Learn How it Works</Button>
+      </div>
+
+      <div className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+        <Card className="hover:border-orange-200 transition-colors">
+          <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-[#f97316] mb-4">
+            <Icons.Activity />
+          </div>
+          <h3 className="text-xl font-bold mb-2">Real-time Metrics</h3>
+          <p className="text-gray-600">Track generation speed and compression ratios instantly as you work.</p>
+        </Card>
+        <Card className="hover:border-blue-200 transition-colors">
+          <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-4">
+            <Icons.Layout />
+          </div>
+          <h3 className="text-xl font-bold mb-2">Dual Algorithms</h3>
+          <p className="text-gray-600">Switch between Extractive extraction and Abstractive synthesis with one click.</p>
+        </Card>
+        <Card className="hover:border-purple-200 transition-colors">
+          <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 mb-4">
+            <Icons.Sparkles />
+          </div>
+          <h3 className="text-xl font-bold mb-2">BART Optimized</h3>
+          <p className="text-gray-600">Powered by fine-tuned neural weights for human-like summary quality.</p>
+        </Card>
+      </div>
+    </section>
+  );
+
+  const ToolSection = () => (
+    <section className="pt-32 pb-20 px-6 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        {/* Input Column */}
+        <div className="lg:col-span-5 space-y-6">
+          <Card>
+            <div className="flex justify-between items-center mb-4">
+               <h2 className="text-xl font-[Outfit] font-bold">Source Document</h2>
+               <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">{inputText.split(/\s+/).filter(Boolean).length} Words</span>
+            </div>
+            <textarea 
+               value={inputText}
+               onChange={(e) => setInputText(e.target.value)}
+               placeholder="Paste your research, transcript, or article here..."
+               className="w-full h-80 bg-gray-50 border-none rounded-xl p-5 text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-orange-500/20 transition-all resize-none font-medium mb-6"
+            />
+            
+            <div className="space-y-6">
+              <div>
+                <label className="text-sm font-bold text-gray-500 mb-3 block">Target Sentences: {summaryLength}</label>
+                <input 
+                  type="range" min="1" max="10" 
+                  value={summaryLength}
+                  onChange={(e) => setSummaryLength(parseInt(e.target.value))}
+                  className="w-full accent-[#f97316] cursor-pointer"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-bold text-gray-500 mb-3 block">Intelligence Layer</label>
+                <div className="grid grid-cols-3 gap-2">
+                  {['TF-IDF Extraction', 'Transformer', 'Compare Both'].map(m => (
+                    <button 
+                      key={m}
+                      onClick={() => setSelectedModel(m)}
+                      className={`py-2 px-3 rounded-lg text-xs font-bold transition-all ${selectedModel === m ? 'bg-gray-900 text-white shadow-lg shadow-gray-900/20' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                    >
+                      {m}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <Button 
+                onClick={handleGenerate} 
+                isLoading={isGenerating}
+                className="w-full py-4 text-lg"
+              >
+                Execute Synthesis
+              </Button>
+              
+              <Button 
+                variant="ghost"
+                onClick={() => { setInputText(''); setTfidfOutput(''); setTransformerOutput(''); setMetrics(null); }}
+                className="w-full text-sm py-2"
+              >
+                Clear Workspace
+              </Button>
+            </div>
+          </Card>
+        </div>
+
+        {/* Output Column */}
+        <div className="lg:col-span-7 space-y-6">
+          
+          {/* Metrics Bar */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+             {[
+               { label: 'Gen Time', value: metrics?.gen_time || '-', icon: <Icons.Activity /> },
+               { label: 'Words', value: metrics?.summary_len || '0', icon: <Icons.Layout /> },
+               { label: 'Ratio', value: metrics?.compression_ratio || '0%', icon: <Icons.Zap /> },
+               { label: 'Status', value: isGenerating ? 'Active' : 'Standby', icon: <Icons.Check /> }
+             ].map((m, i) => (
+               <div key={i} className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-3">
+                  <div className="text-[#f97316]">{m.icon}</div>
+                  <div>
+                    <p className="text-[10px] font-bold text-gray-400 uppercase">{m.label}</p>
+                    <p className="text-sm font-bold text-gray-900">{m.value}</p>
+                  </div>
+               </div>
+             ))}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-[500px]">
+             {/* Result Card: TF-IDF */}
+             {(selectedModel === 'Compare Both' || selectedModel === 'TF-IDF Extraction') && (
+               <div className={`bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col ${selectedModel === 'TF-IDF Extraction' ? 'md:col-span-2' : ''}`}>
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="font-bold text-gray-900 flex items-center gap-2">
+                       <span className="p-2 bg-emerald-50 text-emerald-600 rounded-lg"><Icons.Layout /></span>
+                       Extractive Summary
+                    </h3>
+                    {tfidfOutput && <button onClick={() => handleCopy(tfidfOutput)} className="text-gray-400 hover:text-[#f97316] transition-colors"><Icons.Copy /></button>}
+                  </div>
+                  <div className="flex-1 overflow-y-auto text-gray-600 leading-relaxed text-sm scrollbar-hide">
+                    {isGenerating ? 'Computing sentences...' : (tfidfOutput || 'Awaiting input synthesis...')}
+                  </div>
+               </div>
+             )}
+
+             {/* Result Card: Transformer */}
+             {(selectedModel === 'Compare Both' || selectedModel === 'Transformer') && (
+               <div className={`bg-white rounded-2xl border border-orange-100 shadow-sm p-6 flex flex-col ${selectedModel === 'Transformer' ? 'md:col-span-2' : ''}`}>
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="font-bold text-gray-900 flex items-center gap-2">
+                       <span className="p-2 bg-orange-50 text-[#f97316] rounded-lg"><Icons.Sparkles /></span>
+                       Neural Synthesis
+                    </h3>
+                    {transformerOutput && <button onClick={() => handleCopy(transformerOutput)} className="text-gray-400 hover:text-[#f97316] transition-colors"><Icons.Copy /></button>}
+                  </div>
+                  <div className="flex-1 overflow-y-auto text-gray-600 leading-relaxed text-sm scrollbar-hide">
+                    {isGenerating ? 'Generating tokens...' : (transformerOutput || 'Neural network ready.')}
+                  </div>
+               </div>
+             )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+
+  const AboutSection = () => (
+    <section className="pt-32 pb-20 px-6 max-w-4xl mx-auto">
+      <h2 className="text-4xl font-[Outfit] font-bold mb-8">Our Core Technologies</h2>
+      <div className="space-y-8">
+        <div className="flex gap-6">
+          <div className="flex-shrink-0 w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center font-bold text-2xl">01</div>
+          <div>
+            <h3 className="text-xl font-bold mb-2">TF-IDF Vectorization</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Term Frequency-Inverse Document Frequency is a statistical measure used to evaluate how important a word is to a document. Our engine identifies high-value sentences by calculating their relative importance within the text structure.
+            </p>
+          </div>
+        </div>
+        <div className="flex gap-6">
+          <div className="flex-shrink-0 w-16 h-16 bg-orange-50 text-[#f97316] rounded-2xl flex items-center justify-center font-bold text-2xl">02</div>
+          <div>
+            <h3 className="text-xl font-bold mb-2">BART (Bidirectional Auto-Regressive Transformers)</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Our neural summarization uses a fine-tuned BART model optimized with LoRA adapters. Unlike extraction, this model "reads" the whole text and regenerates it from scratch, providing human-like summaries that are grammatically coherent.
+            </p>
+          </div>
+        </div>
+        <div className="flex gap-6">
+          <div className="flex-shrink-0 w-16 h-16 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center font-bold text-2xl">03</div>
+          <div>
+            <h3 className="text-xl font-bold mb-2">Railway Optimized Infrastructure</h3>
+            <p className="text-gray-600 leading-relaxed">
+              The backend is served via FastAPI on Railway's containerized infrastructure, ensuring minimal latency and high availability for AI inference.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+
+  const Footer = () => (
+    <footer className="bg-gray-50 border-t border-gray-100 py-12 px-6">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-[#f97316] rounded-lg flex items-center justify-center text-white text-xs">
+            <Icons.Sparkles />
+          </div>
+          <span className="font-bold text-gray-900 tracking-tight">SummarizeStudio.</span>
+        </div>
+        <p className="text-sm text-gray-500 font-medium tracking-wide">© 2026 NLP Web-Based Project. All rights reserved.</p>
+        <div className="flex gap-6">
+           <button onClick={() => setView('home')} className="text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors">Home</button>
+           <button onClick={() => setView('tool')} className="text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors">Workspace</button>
+           <button onClick={() => setView('about')} className="text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors">Privacy</button>
+        </div>
+      </div>
+    </footer>
+  );
+
+  return (
+    <div className="min-h-screen bg-[#f9fafb] font-[Inter]">
+      <Header />
+      <main className="transition-all duration-500">
+        {view === 'home' && <HomeSection />}
+        {view === 'tool' && <ToolSection />}
+        {view === 'about' && <AboutSection />}
+      </main>
+      <Footer />
+    </div>
+  );
+}
