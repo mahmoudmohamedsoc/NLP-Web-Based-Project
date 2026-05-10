@@ -24,7 +24,11 @@ class BartSummarizer:
             base_model_name = "facebook/bart-base"
             
             try:
+                if model_dir is None:
+                    raise ValueError("model_dir cannot be None")
+                
                 # Load tokenizer
+                print(f"Loading tokenizer from {model_dir}")
                 self.tokenizer = BartTokenizer.from_pretrained(model_dir)
                 
                 # Load base model
@@ -47,12 +51,24 @@ class BartSummarizer:
         Generates an abstractive summary of the input text.
         """
         if self.model is None:
-            # Attempt to load from default path if not loaded
-            default_path = os.path.join(os.path.dirname(__file__), "bart_weights")
-            if os.path.exists(default_path):
-                self.load_model(default_path)
-            else:
-                raise Exception("BART model not loaded and default path not found.")
+            # Attempt to load from multiple potential paths
+            current_dir = os.path.dirname(__file__) or "."
+            potential_paths = [
+                os.path.join(current_dir, "bart_weights"),
+                os.path.join(os.getcwd(), "models", "bart_weights"),
+                os.path.join(os.getcwd(), "bart_weights")
+            ]
+            
+            loaded = False
+            for path in potential_paths:
+                if os.path.exists(path):
+                    print(f"Discovered weights at: {path}")
+                    self.load_model(path)
+                    loaded = True
+                    break
+            
+            if not loaded:
+                raise Exception(f"BART model not loaded. Tried searching in: {potential_paths}")
         
         inputs = self.tokenizer(text, return_tensors="pt", max_length=1024, truncation=True).to(self.device)
         
