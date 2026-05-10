@@ -284,7 +284,7 @@ const SummarizerApp = () => {
                   
                   {/* Extractive Card */}
                   {(selectedModel === 'Compare Both' || selectedModel === 'TF-IDF') && (
-                    <Card key={tab} className={`flex flex-col ${selectedModel === 'TF-IDF' ? 'col-span-2' : 'col-span-2 lg:col-span-1'} border-white/5`}>
+                    <Card key="tfidf" className={`flex flex-col ${selectedModel === 'TF-IDF' ? 'col-span-2' : 'col-span-2 lg:col-span-1'} border-white/5`}>
                       <div className="flex justify-between items-center mb-5">
                         <div className="flex items-center gap-3">
                            <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-500"><Icons.Layout /></div>
