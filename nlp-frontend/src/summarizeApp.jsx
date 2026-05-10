@@ -122,7 +122,7 @@ export default function App() {
   );
 
   const HomeSection = () => (
-    <section className="pt-40 pb-20 px-6 md:px-20 w-full text-center bg-[#f9fafb]">
+    <section className="pt-40 pb-20 px-6 md:px-10 w-full text-center bg-[#f9fafb]">
       <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 text-[#f97316] text-sm font-bold mb-8 animate-bounce">
         <Icons.Zap /> Next-Gen AI Summarization
       </div>
@@ -164,7 +164,7 @@ export default function App() {
   );
 
   const ToolSection = () => (
-    <section className="pt-32 pb-20 px-6 md:px-20 w-full bg-[#f9fafb]">
+    <section className="pt-32 pb-20 px-6 md:px-10 w-full bg-[#f9fafb]">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         {/* Input Column */}
@@ -321,7 +321,7 @@ export default function App() {
   );
 
   const Footer = () => (
-    <footer className="bg-gray-50 border-t border-gray-100 py-12 px-6 md:px-20">
+    <footer className="bg-gray-50 border-t border-gray-100 py-12 px-6 md:px-10">
       <div className="w-full flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-[#f97316] rounded-lg flex items-center justify-center text-white text-xs">
