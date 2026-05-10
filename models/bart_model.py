@@ -1,5 +1,5 @@
 import torch
-from transformers import BartForConditionalGeneration, BartTokenizer
+from transformers import BartForConditionalGeneration, BartTokenizer, AutoModelForConditionalGeneration, AutoTokenizer
 from peft import PeftModel
 import os
 from pathlib import Path
@@ -21,30 +21,43 @@ class BartSummarizer:
         Loads the BART base model and its LoRA adapters.
         """
         if self.model is None:
-            print(f"Loading BART model and adapters from {model_dir}...")
+            print(f"DEBUG: Starting load_model with model_dir={model_dir}")
             base_model_name = "facebook/bart-base"
             
             try:
                 if model_dir is None:
-                    raise ValueError("model_dir cannot be None")
+                    raise ValueError("DEBUG ERROR: model_dir is None at start of load_model")
                 
                 # Load tokenizer
-                print(f"Loading tokenizer from {model_dir}")
-                self.tokenizer = BartTokenizer.from_pretrained(model_dir)
+                print(f"DEBUG: Attempting to load tokenizer from {model_dir}")
+                try:
+                    self.tokenizer = AutoTokenizer.from_pretrained(model_dir)
+                except Exception as e_tok:
+                    print(f"DEBUG: Tokenizer load from {model_dir} failed: {e_tok}. Falling back to {base_model_name}")
+                    self.tokenizer = AutoTokenizer.from_pretrained(base_model_name)
+                
+                if self.tokenizer is None:
+                    raise ValueError("DEBUG ERROR: self.tokenizer became None after loading")
                 
                 # Load base model
-                print(f"Loading base model: {base_model_name}")
-                base_model = BartForConditionalGeneration.from_pretrained(base_model_name)
+                print(f"DEBUG: Attempting to load base model: {base_model_name}")
+                base_model = AutoModelForConditionalGeneration.from_pretrained(base_model_name)
+                
+                if base_model is None:
+                    raise ValueError("DEBUG ERROR: base_model is None after loading")
                 
                 # Load adapters (LoRA)
-                print(f"Attaching LoRA adapters from: {model_dir}")
+                print(f"DEBUG: Attempting to attach LoRA adapters from: {model_dir}")
                 self.model = PeftModel.from_pretrained(base_model, model_dir)
+                
+                if self.model is None:
+                    raise ValueError("DEBUG ERROR: self.model is None after Peft load")
                 
                 self.model.to(self.device)
                 self.model.eval()
                 print("BART model loaded successfully.")
             except Exception as e:
-                print(f"Error loading BART model: {e}")
+                print(f"CRITICAL ERROR in load_model: {type(e).__name__}: {e}")
                 raise e
 
     def summarize(self, text, max_length=128, min_length=30):
