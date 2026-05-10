@@ -30,22 +30,40 @@ def preprocess(text):
     return text
 
 
-def summarize(text, num_sentences=1):
+def summarize(text, num_sentences=3):
     from nltk.tokenize import sent_tokenize
+
+    if not text.strip():
+        return ""
 
     sentences = sent_tokenize(text)
 
+    # Return original text if it's too short for requested summary length
     if len(sentences) <= num_sentences:
         return text
 
     cleaned = [preprocess(s) for s in sentences]
+    
+    # Filter out empty strings after preprocessing
+    valid_indices = [i for i, c in enumerate(cleaned) if c.strip()]
+    if not valid_indices:
+        return ""
+    
+    valid_cleaned = [cleaned[i] for i in valid_indices]
+    valid_sentences = [sentences[i] for i in valid_indices]
 
-    vectorizer = TfidfVectorizer(stop_words='english')
-    tfidf = vectorizer.fit_transform(cleaned)
+    try:
+        vectorizer = TfidfVectorizer(stop_words='english')
+        tfidf = vectorizer.fit_transform(valid_cleaned)
+    except ValueError:
+        # Handles cases where all words are stop words
+        return " ".join(sentences[:num_sentences])
 
     scores = np.sum(tfidf.toarray(), axis=1)
 
-    ranked = np.argsort(scores)[-num_sentences:]
+    # Get the top N indices
+    top_n = min(num_sentences, len(valid_sentences))
+    ranked = np.argsort(scores)[-top_n:]
     ranked = sorted(ranked)
 
-    return " ".join([sentences[i] for i in ranked])
+    return " ".join([valid_sentences[i] for i in ranked])
