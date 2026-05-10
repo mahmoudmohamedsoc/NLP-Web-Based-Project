@@ -1,5 +1,5 @@
 import torch
-from transformers import BartForConditionalGeneration, BartTokenizer, AutoModelForConditionalGeneration, AutoTokenizer
+from transformers import BartForConditionalGeneration, BartTokenizer, AutoModelForSeq2SeqLM, AutoTokenizer
 from peft import PeftModel
 import os
 from pathlib import Path
@@ -41,7 +41,7 @@ class BartSummarizer:
                 
                 # Load base model
                 print(f"DEBUG: Attempting to load base model: {base_model_name}")
-                base_model = AutoModelForConditionalGeneration.from_pretrained(base_model_name)
+                base_model = AutoModelForSeq2SeqLM.from_pretrained(base_model_name)
                 
                 if base_model is None:
                     raise ValueError("DEBUG ERROR: base_model is None after loading")
