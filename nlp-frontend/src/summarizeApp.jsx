@@ -122,7 +122,7 @@ export default function App() {
   );
 
   const HomeSection = () => (
-    <section className="pt-40 pb-20 px-6 max-w-7xl mx-auto text-center">
+    <section className="pt-40 pb-20 px-6 md:px-12 max-w-[1600px] mx-auto text-center">
       <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 text-[#f97316] text-sm font-bold mb-8 animate-bounce">
         <Icons.Zap /> Next-Gen AI Summarization
       </div>
@@ -164,7 +164,7 @@ export default function App() {
   );
 
   const ToolSection = () => (
-    <section className="pt-32 pb-20 px-6 max-w-7xl mx-auto">
+    <section className="pt-32 pb-20 px-6 md:px-12 max-w-[1600px] mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         {/* Input Column */}
@@ -286,7 +286,7 @@ export default function App() {
   );
 
   const AboutSection = () => (
-    <section className="pt-32 pb-20 px-6 max-w-4xl mx-auto">
+    <section className="pt-32 pb-20 px-6 md:px-12 max-w-[1200px] mx-auto">
       <h2 className="text-4xl font-[Outfit] font-bold mb-8">Our Core Technologies</h2>
       <div className="space-y-8">
         <div className="flex gap-6">
@@ -321,8 +321,8 @@ export default function App() {
   );
 
   const Footer = () => (
-    <footer className="bg-gray-50 border-t border-gray-100 py-12 px-6">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+    <footer className="bg-gray-50 border-t border-gray-100 py-12 px-6 md:px-12">
+      <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-[#f97316] rounded-lg flex items-center justify-center text-white text-xs">
             <Icons.Sparkles />
