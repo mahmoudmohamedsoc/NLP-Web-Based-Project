@@ -13,6 +13,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
@@ -22,12 +23,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project
 COPY . .
 
-# Unzip model weights if they exist (or they might be part of the repo)
-# If summarizer_model_v2.zip is in the root:
-# RUN unzip summarizer_model_v2.zip -d models/bart_weights/
+# Unzip model weights into the correct directory
+RUN mkdir -p models/bart_weights && \
+    unzip -o summarizer_model_v2.zip -d models/bart_weights/ && \
+    rm summarizer_model_v2.zip
 
-# Expose port
+# Expose port (Railway will provide the $PORT env var)
 EXPOSE 8000
 
-# Command to run the application
-CMD ["uvicorn", "main_api:app", "--host", "0.0.0.0", "--port", "8000"]
+# Command to run the application using $PORT
+CMD uvicorn main_api:app --host 0.0.0.0 --port ${PORT:-8000}

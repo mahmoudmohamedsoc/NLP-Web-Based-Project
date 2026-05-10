@@ -71,7 +71,7 @@ const SummarizerApp = () => {
         body: JSON.stringify({
             text: inputText,
             num_sentences: summaryLength,
-            model_type: selectedModel === 'Compare Both' ? 'both' : (selectedModel === 'TF-IDF Extraction' ? 'tfidf' : 'transformer')
+            summary_mode: selectedModel === 'Compare Both' ? 'both' : (selectedModel === 'TF-IDF Extraction' ? 'tfidf' : 'transformer')
         }),
         });
 

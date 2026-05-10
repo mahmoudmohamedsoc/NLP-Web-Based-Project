@@ -24,7 +24,7 @@ app.add_middleware(
 class SummarizeRequest(BaseModel):
     text: str
     num_sentences: int = 3
-    model_type: str = "both"  # "tfidf", "transformer", "both"
+    summary_mode: str = "both"  # "tfidf", "transformer", "both"
 
 class Metrics(BaseModel):
     gen_time: str
@@ -67,11 +67,11 @@ async def summarize_text(request: SummarizeRequest):
         transformer_summary = None
         
         # 1. TF-IDF Summarization
-        if request.model_type in ["tfidf", "both"]:
+        if request.summary_mode in ["tfidf", "both"]:
             tfidf_summary = tfidf_model.summarize(request.text, num_sentences=request.num_sentences)
         
         # 2. Transformer Summarization
-        if request.model_type in ["transformer", "both"]:
+        if request.summary_mode in ["transformer", "both"]:
             try:
                 # Map sentences to tokens roughly (1 sentence ~ 20-30 tokens)
                 max_tokens = request.num_sentences * 30
