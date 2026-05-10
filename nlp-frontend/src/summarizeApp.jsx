@@ -129,7 +129,7 @@ export default function App() {
       <h1 className="text-5xl md:text-7xl font-[Outfit] font-extrabold text-gray-900 mb-6 leading-tight">
         Turn long documents into <br /> <span className="text-[#f97316]">concise insights.</span>
       </h1>
-      <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto font-medium text-center">
+      <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto font-medium" style={{ textAlign: 'center' }}>
         Professional NLP extraction and synthesis using state-of-the-art <br className="hidden md:block" /> weights and TF-IDF logic. Built for speed and precision.
       </p>
       <div className="flex flex-col md:flex-row items-center justify-center gap-4">
