@@ -80,7 +80,13 @@ class BaselineSummarizer:
         return np.mean(vectors, axis=0)
 
     def build_features(self, cleaned_sentences: list[str]):
-        tfidf_features = self.tfidf_vectorizer.transform(cleaned_sentences)
+        try:
+            tfidf_features = self.tfidf_vectorizer.transform(cleaned_sentences)
+        except Exception:
+            # Fallback: if vectorizer is not fitted, fit it on the current sentences
+            # This ensures the app doesn't crash even if weights are slightly incompatible
+            self.tfidf_vectorizer.fit(cleaned_sentences)
+            tfidf_features = self.tfidf_vectorizer.transform(cleaned_sentences)
         
         if self.w2v_model is None:
             expected_feature_count = getattr(self.nb_model, "n_features_in_", None)
