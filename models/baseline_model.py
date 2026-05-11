@@ -123,13 +123,41 @@ class BaselineSummarizer:
             return ""
 
         orig_sentences, cleaned_for_model = zip(*filtered)
-        features = self.build_features(list(cleaned_for_model))
-        predictions = self.nb_model.predict(features)
-
-        important_sentences = [s for s, p in zip(orig_sentences, predictions) if p == 1]
         
+        try:
+            features = self.build_features(list(cleaned_for_model))
+            predictions = self.nb_model.predict(features)
+            important_sentences = [s for s, p in zip(orig_sentences, predictions) if p == 1]
+        except Exception:
+            important_sentences = []
+
+        # If NB model fails or finds no "important" sentences, fallback to Frequency-based ranking
         if not important_sentences:
-            important_sentences = list(orig_sentences)
+            try:
+                # Rank sentences by Average Word Frequency (better than raw TF-IDF for small texts)
+                all_text = " ".join(cleaned_for_model)
+                word_counts = {}
+                for word in all_text.split():
+                    word_counts[word] = word_counts.get(word, 0) + 1
+                
+                # Normalize frequencies
+                max_freq = max(word_counts.values()) if word_counts else 1
+                for word in word_counts:
+                    word_counts[word] = word_counts[word] / max_freq
+                
+                # Score sentences
+                sentence_scores = []
+                for s in cleaned_for_model:
+                    score = sum(word_counts.get(word, 0) for word in s.split())
+                    # Density: divide by word count to avoid bias toward long sentences
+                    word_count = len(s.split())
+                    sentence_scores.append(score / word_count if word_count > 0 else 0)
+
+                top_indices = np.argsort(sentence_scores)[-num_sentences:]
+                top_indices = sorted(top_indices)
+                important_sentences = [orig_sentences[i] for i in top_indices]
+            except Exception:
+                important_sentences = list(orig_sentences[:num_sentences])
 
         return " ".join(important_sentences[:num_sentences])
 
