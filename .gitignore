@@ -7,9 +7,12 @@ venv/
 ENV/
 env/
 
-# Large Model Weights (already in weights zips)
-models/bart_weights/
-models/baseline_weights/
+# AI Model Weights
+# Track light weights (BART v3 LoRA + Baseline pkl/model)
+!models/bart_weights/
+!models/baseline_weights/
+
+# Ignore heavy weights (T5) and temporary archive
 models/t5_weights/
 summarizer_model_v*.zip
 New AI Models Updated/

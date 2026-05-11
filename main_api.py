@@ -104,9 +104,15 @@ async def summarize_text(request: SummarizeRequest):
                 max_tokens = 150 # Default from engineer's code
                 
                 if request.transformer_model == "t5":
-                    transformer_summary = t5_manager.summarize(request.text, max_length=max_tokens)
+                    if t5_manager.model is None:
+                        transformer_summary = "Error: T5 model not loaded on server. Please check weights."
+                    else:
+                        transformer_summary = t5_manager.summarize(request.text, max_length=max_tokens)
                 else: # Default to BART
-                    transformer_summary = bart_manager.summarize(request.text, max_length=max_tokens)
+                    if bart_manager.model is None:
+                        transformer_summary = "Error: BART model not loaded on server. Please check weights."
+                    else:
+                        transformer_summary = bart_manager.summarize(request.text, max_length=max_tokens)
             except Exception as e:
                 transformer_summary = f"Error in Transformer ({request.transformer_model}): {str(e)}"
         
