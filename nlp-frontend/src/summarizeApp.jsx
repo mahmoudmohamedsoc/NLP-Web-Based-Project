@@ -59,6 +59,7 @@ export default function App() {
   const [transformerModel, setTransformerModel] = useState('bart'); // bart or t5
   const [tfidfOutput, setTfidfOutput] = useState('');
   const [transformerOutput, setTransformerOutput] = useState('');
+  const [isGenerating, setIsGenerating] = useState(false);
   const [metrics, setMetrics] = useState(null);
 
   const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
