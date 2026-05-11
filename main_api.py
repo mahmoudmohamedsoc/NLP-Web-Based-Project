@@ -6,8 +6,9 @@ import time
 import os
 
 # Import models
-from models import tfidf_model
+from models.baseline_model import baseline_manager
 from models.bart_model import bart_manager
+from models.t5_model import t5_manager
 
 app = FastAPI(title="NLP Summarizer API")
 
@@ -25,6 +26,7 @@ class SummarizeRequest(BaseModel):
     text: str
     num_sentences: int = 3
     summary_mode: str = "both"  # "tfidf", "transformer", "both"
+    transformer_model: str = "bart" # "bart", "t5"
 
 class Metrics(BaseModel):
     gen_time: str
@@ -40,24 +42,46 @@ class SummarizeResponse(BaseModel):
 # ================= Startup =================
 @app.on_event("startup")
 async def startup_event():
-    # Load BART weights on startup
+    from pathlib import Path
+    base_dir = Path(__file__).resolve().parent
+    models_dir = base_dir / "models"
+    
+    # 1. Load Baseline weights
     try:
-        from pathlib import Path
-        base_dir = Path(__file__).resolve().parent
-        weights_path = base_dir / "models" / "bart_weights"
-        
-        if weights_path.exists():
-            bart_manager.load_model(str(weights_path))
-        else:
-            print(f"Warning: BART weights not found at {weights_path}. Transformer mode will fail unless loaded later.")
+        baseline_path = models_dir / "baseline_weights"
+        if baseline_path.exists():
+            baseline_manager.load_model(str(baseline_path))
     except Exception as e:
-        print(f"Warning: Could not load BART model on startup: {e}")
+        print(f"Warning: Could not load Baseline model: {e}")
+
+    # 2. Load BART weights
+    try:
+        bart_path = models_dir / "bart_weights"
+        if bart_path.exists():
+            bart_manager.load_model(str(bart_path))
+    except Exception as e:
+        print(f"Warning: Could not load BART model: {e}")
+
+    # 3. Load T5 weights
+    try:
+        t5_path = models_dir / "t5_weights"
+        if t5_path.exists():
+            t5_manager.load_model(str(t5_path))
+    except Exception as e:
+        print(f"Warning: Could not load T5 model: {e}")
 
 # ================= Endpoints =================
 
 @app.get("/")
 def read_root():
-    return {"status": "NLP Summarizer API is running", "models_loaded": ["tfidf", "transformer" if bart_manager.model else "none"]}
+    return {
+        "status": "NLP Summarizer API is running", 
+        "models_loaded": {
+            "baseline": baseline_manager.nb_model is not None,
+            "bart": bart_manager.model is not None,
+            "t5": t5_manager.model is not None
+        }
+    }
 
 @app.post("/summarize", response_model=SummarizeResponse)
 async def summarize_text(request: SummarizeRequest):
@@ -69,18 +93,22 @@ async def summarize_text(request: SummarizeRequest):
         tfidf_summary = None
         transformer_summary = None
         
-        # 1. TF-IDF Summarization
+        # 1. Extractive (Baseline) Summarization
         if request.summary_mode in ["tfidf", "both"]:
-            tfidf_summary = tfidf_model.summarize(request.text, num_sentences=request.num_sentences)
+            tfidf_summary = baseline_manager.summarize(request.text, num_sentences=request.num_sentences)
         
-        # 2. Transformer Summarization
+        # 2. Neural (Transformer) Summarization
         if request.summary_mode in ["transformer", "both"]:
             try:
-                # Map sentences to tokens roughly (1 sentence ~ 20-30 tokens)
-                max_tokens = request.num_sentences * 30
-                transformer_summary = bart_manager.summarize(request.text, max_length=max_tokens)
+                # Map sentences to tokens roughly (1 sentence ~ 30-40 tokens)
+                max_tokens = 150 # Default from engineer's code
+                
+                if request.transformer_model == "t5":
+                    transformer_summary = t5_manager.summarize(request.text, max_length=max_tokens)
+                else: # Default to BART
+                    transformer_summary = bart_manager.summarize(request.text, max_length=max_tokens)
             except Exception as e:
-                transformer_summary = f"Error in Transformer: {str(e)}"
+                transformer_summary = f"Error in Transformer ({request.transformer_model}): {str(e)}"
         
         generation_time = round(time.time() - start_time, 4)
         

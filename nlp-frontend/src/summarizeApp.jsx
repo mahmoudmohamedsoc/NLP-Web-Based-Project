@@ -56,7 +56,7 @@ export default function App() {
   const [inputText, setInputText] = useState('');
   const [summaryLength, setSummaryLength] = useState(3);
   const [selectedModel, setSelectedModel] = useState('Compare Both');
-  const [isGenerating, setIsGenerating] = useState(false);
+  const [transformerModel, setTransformerModel] = useState('bart'); // bart or t5
   const [tfidfOutput, setTfidfOutput] = useState('');
   const [transformerOutput, setTransformerOutput] = useState('');
   const [metrics, setMetrics] = useState(null);
@@ -76,7 +76,8 @@ export default function App() {
         body: JSON.stringify({
           text: inputText,
           num_sentences: summaryLength,
-          summary_mode: selectedModel === 'Compare Both' ? 'both' : (selectedModel === 'TF-IDF Extraction' ? 'tfidf' : 'transformer')
+          summary_mode: selectedModel === 'Compare Both' ? 'both' : (selectedModel === 'Baseline Extraction' ? 'tfidf' : 'transformer'),
+          transformer_model: transformerModel
         }),
       });
 
@@ -130,7 +131,7 @@ export default function App() {
         Turn long documents into <br /> <span className="text-[#f97316]">concise insights.</span>
       </h1>
       <p className="text-xl text-gray-600 mb-12 max-w-3xl font-medium text-center my-2">
-        Professional NLP extraction and synthesis using state-of-the-art <br /> weights and TF-IDF logic. Built for speed and precision.
+        Professional NLP extraction and synthesis using state-of-the-art <br /> weights, Word2Vec embeddings, and Hybrid TF-IDF logic. Built for speed and precision.
       </p>
       <div className="flex flex-col md:flex-row items-center justify-center gap-4">
         <Button onClick={() => setView('tool')} className="w-full md:w-auto text-lg px-10">Start Summarizing</Button>
@@ -156,8 +157,8 @@ export default function App() {
           <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 mb-4">
             <Icons.Sparkles />
           </div>
-          <h3 className="text-xl font-bold mb-2">BART Optimized</h3>
-          <p className="text-gray-600">Powered by fine-tuned neural weights for human-like summary quality.</p>
+          <h3 className="text-xl font-bold mb-2">BART & T5 Optimized</h3>
+          <p className="text-gray-600">Powered by fine-tuned BART v3 LoRA adapters and T5 neural weights for human-like summary quality.</p>
         </Card>
       </div>
     </section>
@@ -195,7 +196,7 @@ export default function App() {
               <div>
                 <label className="text-sm font-bold text-gray-500 mb-3 block">Intelligence Layer</label>
                 <div className="grid grid-cols-3 gap-2">
-                  {['TF-IDF Extraction', 'Transformer', 'Compare Both'].map(m => (
+                  {['Baseline Extraction', 'Transformer', 'Compare Both'].map(m => (
                     <button
                       key={m}
                       onClick={() => setSelectedModel(m)}
@@ -206,6 +207,26 @@ export default function App() {
                   ))}
                 </div>
               </div>
+
+              {(selectedModel === 'Transformer' || selectedModel === 'Compare Both') && (
+                <div>
+                  <label className="text-sm font-bold text-gray-500 mb-3 block">Neural Architecture</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {[
+                      { id: 'bart', name: 'BART v3 (LoRA)', color: 'orange' },
+                      { id: 't5', name: 'T5 (Advanced)', color: 'blue' }
+                    ].map(m => (
+                      <button
+                        key={m.id}
+                        onClick={() => setTransformerModel(m.id)}
+                        className={`py-2 px-3 rounded-lg text-xs font-bold transition-all border ${transformerModel === m.id ? `bg-${m.color}-50 border-${m.color}-200 text-${m.color}-600` : 'bg-white border-gray-100 text-gray-400 hover:bg-gray-50'}`}
+                      >
+                        {m.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <Button
                 onClick={handleGenerate}
@@ -248,18 +269,18 @@ export default function App() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-[500px]">
-            {/* Result Card: TF-IDF */}
-            {(selectedModel === 'Compare Both' || selectedModel === 'TF-IDF Extraction') && (
-              <div className={`bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col ${selectedModel === 'TF-IDF Extraction' ? 'md:col-span-2' : ''}`}>
+            {/* Result Card: Baseline */}
+            {(selectedModel === 'Compare Both' || selectedModel === 'Baseline Extraction') && (
+              <div className={`bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col ${selectedModel === 'Baseline Extraction' ? 'md:col-span-2' : ''}`}>
                 <div className="flex justify-between items-center mb-4">
                   <h3 className="font-bold text-gray-900 flex items-center gap-2">
                     <span className="p-2 bg-emerald-50 text-emerald-600 rounded-lg"><Icons.Layout /></span>
-                    Extractive Summary
+                    Baseline Summary
                   </h3>
                   {tfidfOutput && <button onClick={() => handleCopy(tfidfOutput)} className="text-gray-400 hover:text-[#f97316] transition-colors"><Icons.Copy /></button>}
                 </div>
                 <div className="flex-1 overflow-y-auto text-gray-600 leading-relaxed text-sm scrollbar-hide">
-                  {isGenerating ? 'Computing sentences...' : (tfidfOutput || 'Awaiting input synthesis...')}
+                  {isGenerating ? 'Analyzing importance...' : (tfidfOutput || 'Awaiting input summary...')}
                 </div>
               </div>
             )}
@@ -292,18 +313,18 @@ export default function App() {
         <div className="flex gap-6">
           <div className="flex-shrink-0 w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center font-bold text-2xl">01</div>
           <div>
-            <h3 className="text-xl font-bold mb-2">TF-IDF Vectorization</h3>
+            <h3 className="text-xl font-bold mb-2">Baseline (Hybrid Extractive)</h3>
             <p className="text-gray-600 leading-relaxed">
-              Term Frequency-Inverse Document Frequency is a statistical measure used to evaluate how important a word is to a document. Our engine identifies high-value sentences by calculating their relative importance within the text structure.
+              An upgraded extraction model that combines Naive Bayes classification with Word2Vec semantic embeddings and TF-IDF importance scores. This ensures that selected sentences are not just statistically relevant, but contextually core to the text.
             </p>
           </div>
         </div>
         <div className="flex gap-6">
           <div className="flex-shrink-0 w-16 h-16 bg-orange-50 text-[#f97316] rounded-2xl flex items-center justify-center font-bold text-2xl">02</div>
           <div>
-            <h3 className="text-xl font-bold mb-2">BART (Bidirectional Auto-Regressive Transformers)</h3>
+            <h3 className="text-xl font-bold mb-2">Neural Synthesis (BART & T5)</h3>
             <p className="text-gray-600 leading-relaxed">
-              Our neural summarization uses a fine-tuned BART model optimized with LoRA adapters. Unlike extraction, this model "reads" the whole text and regenerates it from scratch, providing human-like summaries that are grammatically coherent.
+              Choose between state-of-the-art transformer architectures. BART v3 uses LoRA adapters for precision, while T5 Advanced offers a deep bidirectional understanding for complex news and research articles. Both models regenerate text from scratch for maximum readability.
             </p>
           </div>
         </div>

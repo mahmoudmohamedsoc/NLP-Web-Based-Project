@@ -94,11 +94,11 @@ class BartSummarizer:
         
         with torch.no_grad():
             summary_ids = self.model.generate(
-                inputs["input_ids"],
+                input_ids=inputs["input_ids"],
+                attention_mask=inputs["attention_mask"],
+                num_beams=4,
                 max_length=max_length,
                 min_length=min_length,
-                length_penalty=2.0,
-                num_beams=4,
                 early_stopping=True
             )
             

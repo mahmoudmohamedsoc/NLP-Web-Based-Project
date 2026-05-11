@@ -23,10 +23,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project
 COPY . .
 
-# Unzip model weights into the correct directory
-RUN mkdir -p models/bart_weights && \
-    unzip -o summarizer_model_v2.zip -d models/bart_weights/ && \
-    rm summarizer_model_v2.zip
+# Unzip model weights into the models directory
+RUN unzip -o summarizer_model_v3.zip -d models/ && \
+    rm summarizer_model_v3.zip
 
 # Expose port (Railway will provide the $PORT env var)
 EXPOSE 8000
